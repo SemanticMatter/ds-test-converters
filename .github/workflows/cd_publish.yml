@@ -16,6 +16,8 @@ jobs:
     environment: release
     permissions:
       id-token: write
+      contents: write
+      packages: write
     if: startsWith(inputs.version, 'v')
 
     steps:

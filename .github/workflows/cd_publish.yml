@@ -9,36 +9,8 @@ on:
         default: "v1.0.0"
 
 jobs:
-  build:
-    name: External
-    uses: SINTEF/ci-cd/.github/workflows/cd_release.yml@v2.8.3
-    if: github.repository == 'SemanticMatter/ds-test-converters' && startsWith(github.ref, 'refs/tags/v')
-    permissions:
-      contents: write
-    with:
-      # General
-      git_username: TEAM 4.0
-      git_email: Team4.0@SINTEF.no
-      release_branch: main
-
-      # PyPI
-      python_package: true
-      python_version_build: "3.9"
-      install_extras: "[dev]"
-      package_dirs: s7
-      build_libs: flit
-      build_cmd: flit build
-      publish_on_pypi: false  # Set to false since we won't be using PyPI here
-      upload_distribution: true
-      # Documentation
-      update_docs: false
-
-    secrets:
-      PAT: ${{ secrets.BOT_PAT }}
-
-  publish:
-    name: Publish on GitHub Packages
-    needs: build
+  build_and_publish:
+    name: Build and Publish to GitHub Packages
     runs-on: ubuntu-latest
 
     environment: release
@@ -47,14 +19,31 @@ jobs:
     if: startsWith(inputs.version, 'v')
 
     steps:
-      - name: Download built distribution
-        uses: actions/download-artifact@v4
-        with:
-          name: dist
-          path: dist
+      # Step 1: Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v3
 
+      # Step 2: Set up Python
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install setuptools wheel flit
+
+      # Step 4: Build the Python package
+      - name: Build Python package
+        run: |
+          # Make sure to replace 's7' with your actual source directory if needed
+          flit build --sdist --wheel
+
+      # Step 5: Publish to GitHub Packages
       - name: Publish on GitHub Packages
         run: |
-          python -m pip install --upgrade pip setuptools wheel
           python -m pip install twine
           twine upload --repository-url https://upload.pypi.org/legacy/ dist/* -u __token__ -p ${{ secrets.GITHUB_TOKEN }}
+

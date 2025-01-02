@@ -2,11 +2,11 @@ name: CD - Publish
 
 on:
   workflow_dispatch:
-  inputs:
-    version:
-      description: "Version/Tag to publish"
-      required: true
-      default: "v1.0.0"
+    inputs:
+      version:
+        description: "Version/Tag to publish"
+        required: true
+        default: "v1.0.0"
 
 jobs:
   build:
@@ -44,6 +44,7 @@ jobs:
     environment: release
     permissions:
       id-token: write
+    if: startsWith(inputs.version, 'v')
 
     steps:
       - name: Download built distritbution

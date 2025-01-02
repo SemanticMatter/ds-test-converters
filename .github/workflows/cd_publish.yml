@@ -9,7 +9,7 @@ jobs:
     uses: SINTEF/ci-cd/.github/workflows/cd_release.yml@v2.8.3
     if: github.repository == 'SemanticMatter/ds-test-converters'
     permissions:
-      content: write 
+      contents: write 
     with:
       # General
       git_username: TEAM 4.0

@@ -38,8 +38,7 @@ jobs:
       # Step 4: Build the Python package
       - name: Build Python package
         run: |
-          # Make sure to replace 's7' with your actual source directory if needed
-          flit build --sdist --wheel
+          flit build 
 
       # Step 5: Publish to GitHub Packages
       - name: Publish on GitHub Packages

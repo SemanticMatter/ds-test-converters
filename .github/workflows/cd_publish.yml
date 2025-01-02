@@ -22,7 +22,7 @@ jobs:
       package_dirs: s7
       build_libs: flit
       build_cmd: flit build
-      publish_on_pypi: false
+      publish_on_pypi: true
       upload_distribution: true
       # Documentation
       update_docs: false

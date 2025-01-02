@@ -38,11 +38,10 @@ jobs:
       # Step 4: Build the Python package
       - name: Build Python package
         run: |
-          flit build 
+          flit build
 
       # Step 5: Publish to GitHub Packages
       - name: Publish on GitHub Packages
         run: |
-          python -m pip install twine
-          twine upload --repository-url https://upload.pypi.org/legacy/ dist/* -u __token__ -p ${{ secrets.GITHUB_TOKEN }}
-
+          python -m pip install --upgrade pip setuptools wheel twine
+          twine upload --repository-url https://upload.pypi.github.com/SemanticMatter/ds-test-converters dist/* -u __token__ -p ${{ secrets.PYPI_TOKEN }}

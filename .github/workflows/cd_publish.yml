@@ -9,41 +9,25 @@ on:
         default: "v1.0.0"
 
 jobs:
-  build_and_publish:
-    name: Build and Publish to GitHub Packages
+  build:
     runs-on: ubuntu-latest
 
-    environment: release
-    permissions:
-      id-token: write
-      contents: write
-      packages: write
-    if: startsWith(inputs.version, 'v')
-
     steps:
-      # Step 1: Checkout code
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
-      # Step 2: Set up Python
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v4
+      - name: Set up Python
+        uses: actions/setup-python@v2
         with:
-          python-version: '3.9'
+          python-version: 3.x
 
-      # Step 3: Install dependencies
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install setuptools wheel flit
+          pip install flit
 
-      # Step 4: Build the Python package
-      - name: Build Python package
-        run: |
-          flit build
-
-      # Step 5: Publish to GitHub Packages
-      - name: Publish on GitHub Packages
-        run: |
-          python -m pip install --upgrade pip setuptools wheel twine
-          twine upload --repository-url https://upload.pypi.github.com/SemanticMatter/ds-test-converters dist/* -u __token__ -p ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish package
+        env:
+          FLIT_USERNAME: ${{ secrets.GITHUB_ACTOR }}
+          FLIT_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+        run: flit publish --repository github

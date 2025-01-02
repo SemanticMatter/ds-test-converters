@@ -44,4 +44,4 @@ jobs:
       - name: Publish on GitHub Packages
         run: |
           python -m pip install --upgrade pip setuptools wheel twine
-          twine upload --repository-url https://upload.pypi.github.com/SemanticMatter/ds-test-converters dist/* -u __token__ -p ${{ secrets.PYPI_TOKEN }}
+          twine upload --repository-url https://upload.pypi.github.com/SemanticMatter/ds-test-converters dist/* -u __token__ -p ${{ secrets.GITHUB_TOKEN }}

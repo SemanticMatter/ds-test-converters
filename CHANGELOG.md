@@ -2,11 +2,7 @@
 
 ## [v1.0.0.dev1](https://github.com/SemanticMatter/ds-test-converters/tree/v1.0.0.dev1) (2025-01-06)
 
-[Full Changelog](https://github.com/SemanticMatter/ds-test-converters/compare/v1.0.0.dev2...v1.0.0.dev1)
-
-## [v1.0.0.dev2](https://github.com/SemanticMatter/ds-test-converters/tree/v1.0.0.dev2) (2025-01-06)
-
-[Full Changelog](https://github.com/SemanticMatter/ds-test-converters/compare/9d1aa7fa9ae502c46805dda2d8c909f2d493bcdc...v1.0.0.dev2)
+[Full Changelog](https://github.com/SemanticMatter/ds-test-converters/compare/9d1aa7fa9ae502c46805dda2d8c909f2d493bcdc...v1.0.0.dev1)
 
 **Merged pull requests:**
 

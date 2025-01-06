@@ -3,7 +3,7 @@ requires = ["flit_core >=3.4,<4"]
 build-backend = "flit_core.buildapi"
 
 [project]
-name = "converters"
+name = "DataSpaces-TestConverters"
 description = "Dataspace test converters"
 readme = "README.md"
 classifiers = [
@@ -20,6 +20,9 @@ classifiers = [
 ]
 requires-python = "~=3.9"
 dynamic = ["version"]
+
+[tool.flit.module]
+name = "converters"
 
 dependencies = [
     "numpy >=1.21.0",

@@ -1,12 +1,9 @@
 name: CD - Publish
 
 on:
-  workflow_dispatch:
-    inputs:
-      version:
-        description: "Version/Tag to publish"
-        required: true
-        default: "v1.0.0"
+  release:
+    types:
+    - published
 
 jobs:
   build:
@@ -17,15 +14,14 @@ jobs:
       contents: write
     with:
       # General
-      git_username: TEAM 4.0
-      git_email: Team4.0@SINTEF.no
+      git_username: ${{ vars.CI_CD_GIT_USER }}
+      git_email: ${{ vars.CI_CD_GIT_EMAIL }}
       release_branch: main
 
       # PyPI
       python_package: true
       python_version_build: "3.9"
-      install_extras: "[dev]"
-      package_dirs: s7
+      package_dirs: converters
       build_libs: flit
       build_cmd: flit build
       publish_on_pypi: false

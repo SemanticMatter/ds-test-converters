@@ -1,26 +1,27 @@
 name: CD - Publish
 
 on:
-  workflow_dispatch:
+  release:
+    types:
+    - published
 
 jobs:
   build:
     name: External
     uses: SINTEF/ci-cd/.github/workflows/cd_release.yml@v2.8.3
-    if: github.repository == 'SemanticMatter/ds-test-converters'
+    if: github.repository == 'SemanticMatter/ds-test-converters' && startsWith(github.ref, 'refs/tags/v')
     permissions:
-      contents: write 
+      contents: write
     with:
       # General
-      git_username: TEAM 4.0
-      git_email: Team4.0@SINTEF.no
+      git_username: ${{ vars.CI_CD_GIT_USER }}
+      git_email: ${{ vars.CI_CD_GIT_EMAIL }}
       release_branch: main
 
       # PyPI
       python_package: true
-      python_version_build: '3.9'
-      install_extras: '[dev]'
-      package_dirs: s7
+      python_version_build: "3.9"
+      package_dirs: converters
       build_libs: flit
       build_cmd: flit build
       publish_on_pypi: false
@@ -39,6 +40,7 @@ jobs:
     environment: release
     permissions:
       id-token: write
+    if: startsWith(inputs.version, 'v')
 
     steps:
       - name: Download built distritbution
